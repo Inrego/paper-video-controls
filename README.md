@@ -18,22 +18,12 @@ Here's an example of usage:
 
 This simple example will put material design controls on top of the video.
 
-<!--
-```
-Demo:
-
-<custom-element-demo>
-  <template>
-    <link rel="import" href="my-element.html">
-    <link rel="import" href="../other-element/other-element.html">
+<!-- START-HIDDEN-SECTION: Add imports and styling here. -->
 <script src="../webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="paper-video-controls.html">
-          <paper-video-controls>
-            <video>
-              <source src="demo/demo.mp4" type="video/mp4">
-            </video>
-          </paper-video-controls>
-  </template>
-</custom-element-demo>
-```
--->
+<!-- END-HIDDEN-SECTION: Add the visible part of the demo below. -->
+<paper-video-controls>
+    <video>
+      <source src="demo/demo.mp4" type="video/mp4">
+    </video>
+</paper-video-controls>
