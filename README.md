@@ -26,10 +26,8 @@ Demo:
   <template>
     <link rel="import" href="my-element.html">
     <link rel="import" href="../other-element/other-element.html">
-    <!-- START-HIDDEN-SECTION: Add imports and styling here. -->
 <script src="../webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="paper-video-controls.html">
-<!-- END-HIDDEN-SECTION: Add the visible part of the demo below. -->
           <paper-video-controls>
             <video>
               <source src="demo/demo.mp4" type="video/mp4">
