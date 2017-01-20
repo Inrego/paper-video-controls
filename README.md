@@ -15,7 +15,7 @@ Here's an example of usage:
 <custom-element-demo>
   <template>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="paper-slider.html">
+    <link rel="import" href="paper-video-controls.html">
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
