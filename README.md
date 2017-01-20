@@ -10,20 +10,21 @@ Since you will still have the original video element in your DOM, you can still 
 
 Here's an example of usage:
 
-    <paper-video-controls>
-        <video>
-            <source src="demo.mp4" type="video/mp4">
-        </video>
-    </paper-video-controls>
-
-This simple example will put material design controls on top of the video.
-
-<!-- START-HIDDEN-SECTION: Add imports and styling here. -->
-<script src="../webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="paper-video-controls.html">
-<!-- END-HIDDEN-SECTION: Add the visible part of the demo below. -->
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-slider.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
 <paper-video-controls>
     <video>
-      <source src="demo/demo.mp4" type="video/mp4">
+        <source src="demo/demo.mp4" type="video/mp4">
     </video>
 </paper-video-controls>
+```
