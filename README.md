@@ -17,8 +17,8 @@ Here's an example of usage:
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="paper-video-controls.html">
     <next-code-block></next-code-block>
-    <h4>Note that seeking does not work properly in the iframe here on webcomponents.org</h4>
-    <h4>I assure you, seeking works quite well.</h4>
+    <h4>Note that seeking and full screen does not work properly in the iframe here on webcomponents.org</h4>
+    <h4>I assure you, both features do work.</h4>
   </template>
 </custom-element-demo>
 ```
