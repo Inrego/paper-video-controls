@@ -112,7 +112,7 @@ Custom property | Description | Default
           <span class="video-time">{{_readableDuration(currentTime)}}/[[_readableDuration(duration)]]</span>
           <paper-slider pin="[[timePin]]" id="durationSlider" max="[[duration]]" on-change="_changeCurrentTime" immediate-value="{{durationSliderValue}}" pin-label="[[_readableDuration(durationSliderValue)]]"></paper-slider>
           <paper-icon-button id="toggleMute" icon="av:volume-up" on-tap="toggleMute"></paper-icon-button>
-          <paper-slider pin="[[volumePin]]" pin-label="[[_readableVolume(volumeSliderValue)]]" value="[[videoVolume]]" immediate-value="{{volumeSliderValue}}" id="volumeSlider" on-value-change="_changeVolume" on-immediate-value-change="_changeVolumeImmediate"></paper-slider>
+          <paper-slider pin="[[volumePin]]" pin-label="[[_readableVolume(volumeSliderValue)]]" immediate-value="{{volumeSliderValue}}" id="volumeSlider" value="{{videoVolume}}" on-immediate-value-change="_changeVolume"></paper-slider>
           <paper-icon-button id="fullScreen" icon="icons:fullscreen" on-tap="toggleFullScreen"></paper-icon-button>
       </paper-material>
     </div>
@@ -122,7 +122,7 @@ Custom property | Description | Default
     Polymer({
 
       is: 'paper-video-controls',
-      ready: function() {
+      attached: function() {
         var video = this.getContentChildren('#videoContent')[0];
         if (video) {
           this.$.video = video;
@@ -192,21 +192,11 @@ Custom property | Description | Default
         autoHideControls: {
           type: Number,
           value: 2500
-        },
-        /**
-         * For data binding to the volume of video.
-         */
-        volume: {
-          type: Number,
-          value: 1
         }
       },
       listeners: {
         'mousemove': '_wakeupControls'
       },
-      observers: [
-        '_onVolumePropertyChanged(volume)'  
-      ],
       _readableDuration: function(seconds) {
         var sec = Math.floor(seconds);
         var min = Math.floor(sec / 60);
@@ -234,26 +224,10 @@ Custom property | Description | Default
       },
       _currentVolumeChange: function() {
         this.videoVolume = this.$.video.volume * 100;
-        this.volume = this.$.video.volume;
         this.$.toggleMute.icon = this.$.video.muted ? "av:volume-off" : "av:volume-up"
       },
       _changeVolume: function() {
-        if (this.$.video) {
-          this.$.video.volume = this.$.volumeSlider.value / 100;
-        }
-      },
-      _changeVolumeImmediate: function() {
         this.$.video.volume = this.$.volumeSlider.immediateValue / 100;
-      },
-      _onVolumePropertyChanged: function(volume) {
-        if (this.$.video) {
-          this.$.video.volume = volume;
-        } else {
-          var that = this;
-          this.async(function() {
-            that.$.video.volume = volume;
-          })
-        }
       },
       _changeCurrentTime: function() {
         if (!this.$.durationSlider.dragging) {
