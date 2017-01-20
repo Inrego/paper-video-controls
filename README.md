@@ -27,6 +27,6 @@ Here's an example of usage:
         <source src="demo/demo.mp4" type="video/mp4">
     </video>
 </paper-video-controls>
-<h2>Note that seeking does not work properly in the iframe here on webcomponents.org</h2>
-<h2>I assure you, seeking works quite well.</h2>
+<h4>Note that seeking does not work properly in the iframe here on webcomponents.org</h4>
+<h4>I assure you, seeking works quite well.</h4>
 ```
