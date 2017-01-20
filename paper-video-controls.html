@@ -211,7 +211,7 @@ Custom property | Description | Default
       },
       _currentTimeChange: function() {
         this.currentTime = this.$.video.currentTime;
-        if (!this.$.durationSlider.pointerDown) {
+        if (!this.$.durationSlider.pressed) {
           this.$.durationSlider.value = this.currentTime;
         }
         if (this.autoHideControls > 0 && !this.$.video.paused && !this._controlSleepTimeout) {
