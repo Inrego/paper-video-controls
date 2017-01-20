@@ -210,8 +210,12 @@ Custom property | Description | Default
         this.duration = this.$.video.duration;
       },
       _currentTimeChange: function() {
+        var duration = this.$.video.duration;
+        if (!isNaN(duration) && duration !== undefined && duration != null) {
+          this._durationChange();
+        }
         this.currentTime = this.$.video.currentTime;
-        if (!this.$.durationSlider.pressed) {
+        if (!this.$.durationSlider.dragging) {
           this.$.durationSlider.value = this.currentTime;
         }
         if (this.autoHideControls > 0 && !this.$.video.paused && !this._controlSleepTimeout) {
@@ -226,7 +230,7 @@ Custom property | Description | Default
         this.$.video.volume = this.$.volumeSlider.immediateValue / 100;
       },
       _changeCurrentTime: function() {
-        if (!this.$.durationSlider.pointerDown) {
+        if (!this.$.durationSlider.dragging) {
           this.$.video.currentTime = this.$.durationSlider.value
         }
       },
