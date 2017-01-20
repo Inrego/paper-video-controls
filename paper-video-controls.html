@@ -130,6 +130,9 @@ Custom property | Description | Default
           video.ondurationchange = function() {
             that._durationChange();
           };
+          video.onloadedmetadata = function() {
+            that._durationChange();
+          }
           video.ontimeupdate = function() {
             that._currentTimeChange();
           };
@@ -208,7 +211,6 @@ Custom property | Description | Default
       },
       _currentTimeChange: function() {
         this.currentTime = this.$.video.currentTime;
-        this.duration = this.$.video.duration;
         if (!this.$.durationSlider.pointerDown) {
           this.$.durationSlider.value = this.currentTime;
         }
