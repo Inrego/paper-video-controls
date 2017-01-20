@@ -238,7 +238,7 @@ Custom property | Description | Default
         return volume + "%";
       },
       _fullScreenChange: function(fullScreen) {
-        this.fullScreen = fullScreen;
+        this._setFullScreen(fullScreen);
         this.$.fullScreen.icon = fullScreen ? "icons:fullscreen-exit" : "icons:fullscreen"
       },
       _wakeupControls: function() {
