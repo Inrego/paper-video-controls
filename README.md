@@ -1,5 +1,7 @@
 # \<paper-video-controls\>
 
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/Inrego/paper-video-controls)
+
 A video container element that will provide material design controls for the video. Easy to use and easy to style. 
 The interface part is based heavily off of [`<paper-video>`](https://github.com/AKHXtern/paper-video) by [AKHXtern](https://github.com/AKHXtern/paper-video).
 
