@@ -16,13 +16,19 @@
         max-width: 700px;
       }
       .green-slider {
-        --paper-video-controls-slider-color: var(--google-green-700)
+        --paper-video-controls-slider-color: var(--google-green-700);
+        --paper-video-controls-color: var(--google-green-700);
       }
       .dark-theme {
         --paper-video-controls-slider-color: #E0E0E0;
         --paper-video-controls-pin-text-color: black;
         --paper-video-controls-background: #212121;
         --paper-video-controls-color: #EEEEEE;
+      }
+      .top-controls {
+        background-color: rgba(0, 0, 0, 0.7);
+        font-size: 1.5em;
+        color: var(--google-green-700);
       }
     </style>
   </head>
@@ -46,6 +52,9 @@
       <demo-snippet>
         <template>
           <paper-video-controls class="green-slider" time-pin volume-pin>
+            <div class="top-controls fullscreen-controls">
+              Video title that is only shown in full screen.
+            </div>
             <video>
               <source src="demo.mp4" type="video/mp4">
             </video>

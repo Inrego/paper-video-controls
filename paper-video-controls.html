@@ -20,6 +20,11 @@ Example:
       </video>
     </paper-video-controls>
 
+### Top controls
+
+If you want to add some extra controls to the top of the video (for example back button, video title, subtitle choice etc), you can also add a div inside this element with the class `top-controls`.
+Furthermore, if you want this to only be shown when in full screen, add the `fullscreen-controls` class as well. See demo for example.
+
 ### Styling
 
 The following custom properties and mixins are available for styling:
@@ -45,73 +50,82 @@ Custom property | Description | Default
         --paper-video-controls-slider-color: var(--google-blue-700);
         --paper-video-controls-pin-text-color: white;
       }
-      :host #videoControls {
+      :host #videoControls,:host ::content .top-controls {
         position: absolute;
-        bottom: 4px;
         left: 0;
         right: 0;
+        transition: 0.1s;
+        padding: 15px;
+      }
+      :host #videoControls {
+        bottom: 4px;
         display: flex;
         color: var(--paper-video-controls-color);
         background-color: var(--paper-video-controls-background);
-        padding: 15px;
         align-items: center;
-        transition: 0.1s;
-    }
-    :host .container {
-        position: relative;
-        display: inline-block;
-        outline: none;
+      }
+      :host ::content .top-controls {
+        top: 0px;
+      }
+      :host ::content #container:not(:-webkit-full-screen) .fullscreen-controls {
+        display: none;
+      }
+      :host .container {
+          position: relative;
+          display: inline-block;
+          outline: none;
+          width: 100%;
+      }
+      :host #durationSlider {
+          flex: 1;
+      }
+      :host #volumeSlider {
+          max-width: 120px;
+      }
+      :host #container:-webkit-full-screen,
+      :host #container:-webkit-full-screen ::content video {
+          width: 100vw;
+          height: 100vh;
+      }
+      :host ::content video {
+        background-color: black;
         width: 100%;
-    }
-    :host #durationSlider {
-        flex: 1;
-    }
-    :host #volumeSlider {
-        max-width: 120px;
-    }
-    :host #container:-webkit-full-screen,
-    :host #container:-webkit-full-screen ::content video {
-        width: 100vw;
-        height: 100vh;
-    }
-    :host ::content video {
-      background-color: black;
-      width: 100%;
-    }
-    :host.controls-hidden .container {
-      cursor: none;
-    }
-    
-    :host(.controls-hidden:not([controls])) {
-      cursor: default;
-    }
-    
-    :host(.controls-hidden) #videoControls {
-      transition: 0.5s;
-      opacity: 0;
-      pointer-events: none;
-      touch-action: none;
-    }
-    :host .video-time {
-      @apply(--paper-font-caption);
-    }
-    paper-slider {
-      --paper-slider-knob-start-color: var(--paper-video-controls-slider-color);
-      --paper-slider-knob-start-border-color: var(--paper-video-controls-slider-color);
-      --paper-slider-knob-color: var(--paper-video-controls-slider-color);
-      --paper-slider-active-color: var(--paper-video-controls-slider-color);
-      --paper-slider-knob-color: var(--paper-video-controls-slider-color);
-      --paper-slider-pin-color: var(--paper-video-controls-slider-color);
-      --paper-slider-font-color: var(--paper-video-controls-pin-text-color);
-    }
-    @media (max-width:640px)  { 
-        #volumeSlider, #toggleMute {
-          display: none;
-        }
-     }
+      }
+      :host.controls-hidden .container {
+        cursor: none;
+      }
+      
+      :host(.controls-hidden:not([controls])) {
+        cursor: default;
+      }
+      
+      :host(.controls-hidden) #videoControls, :host(.controls-hidden) ::content .top-controls {
+        transition: 0.5s;
+        opacity: 0;
+        pointer-events: none;
+        touch-action: none;
+      }
+      :host .video-time {
+        @apply(--paper-font-caption);
+      }
+      paper-slider {
+        --paper-slider-knob-start-color: var(--paper-video-controls-slider-color);
+        --paper-slider-knob-start-border-color: var(--paper-video-controls-slider-color);
+        --paper-slider-knob-color: var(--paper-video-controls-slider-color);
+        --paper-slider-active-color: var(--paper-video-controls-slider-color);
+        --paper-slider-knob-color: var(--paper-video-controls-slider-color);
+        --paper-slider-pin-color: var(--paper-video-controls-slider-color);
+        --paper-slider-font-color: var(--paper-video-controls-pin-text-color);
+      }
+      @media (max-width:640px)  { 
+          #volumeSlider, #toggleMute {
+            display: none;
+          }
+      }
     </style>
     <div id="container" class="container">
       <content id="videoContent" select="video"></content>
+      <content id="topControls" select=".top-controls"></content>
       <paper-material elevation="1" hidden$="{{!controls}}" id="videoControls">
           <paper-icon-button id="playPauseIcon" on-tap="togglePlayPause" icon="av:play-arrow"></paper-icon-button>
           <span class="video-time">{{_readableDuration(currentTime)}}/[[_readableDuration(duration)]]</span>
