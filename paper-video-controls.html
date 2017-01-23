@@ -104,6 +104,11 @@ Custom property | Description | Default
       --paper-slider-pin-color: var(--paper-video-controls-slider-color);
       --paper-slider-font-color: var(--paper-video-controls-pin-text-color);
     }
+    @media (max-width:640px)  { 
+        #volumeSlider, #toggleMute {
+          display: none;
+        }
+     }
     </style>
     <div id="container" class="container">
       <content id="videoContent" select="video"></content>
