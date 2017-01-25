@@ -214,7 +214,7 @@ Custom property | Description | Default
         }
       },
       listeners: {
-        'mousemove': '_wakeupControls'
+        'mousemove': 'wakeupControls'
       },
       _readableDuration: function(seconds) {
         var sec = Math.floor(seconds);
@@ -238,7 +238,7 @@ Custom property | Description | Default
           this.$.durationSlider.value = this.currentTime;
         }
         if (this.autoHideControls > 0 && !this.$.video.paused && !this._controlSleepTimeout) {
-          this._controlSleepTimeout = setTimeout(this._sleepControls.bind(this), this.autoHideControls);
+          this._controlSleepTimeout = setTimeout(this.sleepControls.bind(this), this.autoHideControls);
         }
       },
       _currentVolumeChange: function() {
@@ -260,12 +260,18 @@ Custom property | Description | Default
         this._setFullScreen(fullScreen);
         this.$.fullScreen.icon = fullScreen ? "icons:fullscreen-exit" : "icons:fullscreen"
       },
-      _wakeupControls: function() {
+      /**
+      * Shows the controls
+      */
+      wakeupControls: function() {
         clearTimeout(this._controlSleepTimeout);
         this.classList.remove('controls-hidden');
         this._controlSleepTimeout = null;
       },
-      _sleepControls: function() {
+      /**
+      * Hides the controls
+      */
+      sleepControls: function() {
         this.classList.add('controls-hidden');
       },
       /**
