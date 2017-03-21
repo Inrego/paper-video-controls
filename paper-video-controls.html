@@ -189,9 +189,16 @@ Custom property | Description | Default
               that._fullScreenChange(document.webkitIsFullScreen);
             }
           } else if (this.mozRequestFullScreen) {
-            this.onmozfullscreenchange = function() {
+            document.onmozfullscreenchange = function() {
               that._fullScreenChange(document.mozFullScreen);
             }
+          } else if (video.webkitEnterFullscreen) {
+            video.addEventListener("webkitbeginfullscreen", function() {
+              that._fullscreenChange(true);
+            });
+            video.addEventListener("webkitendfullscreen", function() {
+              that._fullscreenChange(false);
+            });
           }
         }
       },
@@ -299,6 +306,8 @@ Custom property | Description | Default
           this.$.container.webkitRequestFullscreen();
         } else if (this.mozRequestFullScreen) {
           this.$.container.mozRequestFullScreen();
+        } else if (this.$.video.webkitEnterFullScreen) {
+          this.$.video.webkitEnterFullScreen();
         }
       },
       /**
@@ -311,6 +320,8 @@ Custom property | Description | Default
           document.webkitExitFullscreen();
         } else if (this.mozRequestFullScreen) {
           document.mozCancelFullScreen();
+        } else if (this.$.video.webkitEnterFullScreen) {
+          this.$.video.webkitExitFullscreen();
         }
       },
       /**
