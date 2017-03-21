@@ -50,6 +50,20 @@ Custom property | Description | Default
         --paper-video-controls-slider-color: var(--google-blue-700);
         --paper-video-controls-pin-text-color: white;
       }
+      :host #container:-webkit-full-screen ::content .top-controls {
+        
+      }
+      :host #container:-webkit-full-screen #videoControls,
+      :host #container:fullscreen #videoControls,
+      :host #container:-moz-full-screen #videoControls,
+      :host #container:-ms-fullscreen #videoControls,
+      
+      :host #container:-webkit-full-screen ::content .top-controls,
+      :host #container:fullscreen ::content .top-controls,
+      :host #container:-moz-full-screen ::content .top-controls,
+      :host #container:-ms-fullscreen ::content .top-controls {
+        position: fixed;
+      }
       :host #videoControls,:host ::content .top-controls {
         position: absolute;
         left: 0;
