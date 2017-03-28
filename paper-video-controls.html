@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
 <link rel="import" href="../paper-material/paper-material.html">
@@ -35,7 +37,7 @@ Custom property | Description | Default
 `--paper-video-controls-slider-color` | Color of the sliders (both progress bar and volume). | `--google-blue-700`
 `--paper-video-controls-pin-text-color` | Color of the text inside the pin | `white`
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="paper-video-controls">
@@ -49,21 +51,21 @@ Custom property | Description | Default
         --paper-video-controls-slider-color: var(--google-blue-700);
         --paper-video-controls-pin-text-color: white;
       }
-      :host #container:-webkit-full-screen ::content .top-controls {
-        
+      :host #container:-webkit-full-screen ::slotted(#topControls) {
+
       }
       :host #container:-webkit-full-screen #videoControls,
       :host #container:fullscreen #videoControls,
       :host #container:-moz-full-screen #videoControls,
       :host #container:-ms-fullscreen #videoControls,
-      
-      :host #container:-webkit-full-screen ::content .top-controls,
-      :host #container:fullscreen ::content .top-controls,
-      :host #container:-moz-full-screen ::content .top-controls,
-      :host #container:-ms-fullscreen ::content .top-controls {
+
+      :host #container:-webkit-full-screen ::slotted(#topControls),
+      :host #container:fullscreen ::slotted(#topControls),
+      :host #container:-moz-full-screen ::slotted(#topControls),
+      :host #container:-ms-fullscreen ::slotted(#topControls) {
         position: fixed;
       }
-      :host #videoControls,:host ::content .top-controls {
+      :host #videoControls,:host ::slotted(#topControls) {
         position: absolute;
         left: 0;
         right: 0;
@@ -77,10 +79,12 @@ Custom property | Description | Default
         align-items: center;
         padding: 15px;
       }
-      :host ::content .top-controls {
+      :host ::slotted(#topControls) {
         top: 0px;
       }
-      :host ::content #container:not(:-webkit-full-screen) .fullscreen-controls {
+      /*:host ::content #container:not(:-webkit-full-screen) .fullscreen-controls {*/
+
+      :host ::slotted(#container:not(:-webkit-full-screen)) .fullscreen-controls {
         display: none;
       }
       :host .container {
@@ -96,23 +100,23 @@ Custom property | Description | Default
           max-width: 120px;
       }
       :host #container:-webkit-full-screen,
-      :host #container:-webkit-full-screen ::content video {
+      :host #container:-webkit-full-screen ::slotted(video) {
           width: 100vw;
           height: 100vh;
       }
-      :host ::content video {
+      :host ::slotted(video) {
         background-color: black;
         width: 100%;
       }
       :host.controls-hidden .container {
         cursor: none;
       }
-      
+
       :host(.controls-hidden:not([controls])) {
         cursor: default;
       }
-      
-      :host(.controls-hidden) #videoControls, :host(.controls-hidden) ::content .top-controls {
+
+      :host(.controls-hidden) #videoControls, :host(.controls-hidden) ::slotted(#topControls) {
         transition: 0.5s;
         opacity: 0;
         pointer-events: none;
@@ -130,12 +134,13 @@ Custom property | Description | Default
         --paper-slider-pin-color: var(--paper-video-controls-slider-color);
         --paper-slider-font-color: var(--paper-video-controls-pin-text-color);
       }
-      @media (max-width:640px)  { 
+      @media (max-width:640px)  {
           #volumeSlider, #toggleMute {
             display: none;
           }
       }
     </style>
+
     <iron-iconset-svg name="icons" size="24">
       <svg>
         <defs>
@@ -155,8 +160,8 @@ Custom property | Description | Default
       </svg>
     </iron-iconset-svg>
       <div id="container" class="container">
-      <content id="videoContent" select="video"></content>
-      <content id="topControls" select=".top-controls"></content>
+      <slot id="videoContent" name="video"></slot>
+      <slot id="topControls" name="top-controls"></slot>
       <paper-material elevation="1" hidden$="{{!controls}}" id="videoControls">
           <paper-icon-button id="playPauseIcon" on-tap="togglePlayPause" icon="play-arrow"></paper-icon-button>
           <span class="video-time">{{_readableDuration(currentTime)}}/[[_readableDuration(duration)]]</span>
@@ -228,7 +233,7 @@ Custom property | Description | Default
           value: true
         },
         /**
-         * If true, will show a small pin with percentage when dragging the volume slider. 
+         * If true, will show a small pin with percentage when dragging the volume slider.
          */
         volumePin: {
           type: Boolean,
