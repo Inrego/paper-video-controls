@@ -1,12 +1,13 @@
+<!DOCTYPE html>
+
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-slider/paper-slider.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-styles/typography.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-icons/av-icons.html">
 <link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="paper-video-controls-icons.html">
 
 <!--
 `paper-video-controls`
@@ -36,10 +37,15 @@ Custom property | Description | Default
 `--paper-video-controls-slider-color` | Color of the sliders (both progress bar and volume). | `--google-blue-700`
 `--paper-video-controls-pin-text-color` | Color of the text inside the pin | `white`
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="paper-video-controls">
+  <style>
+    paper-video-controls #container:not(:-webkit-full-screen) .fullscreen-controls {
+      display: none;
+    }
+  </style>
   <template>
     <style>
       :host {
@@ -50,21 +56,21 @@ Custom property | Description | Default
         --paper-video-controls-slider-color: var(--google-blue-700);
         --paper-video-controls-pin-text-color: white;
       }
-      :host #container:-webkit-full-screen ::content .top-controls {
-        
+      :host #container:-webkit-full-screen ::slotted(#topControls) {
+
       }
       :host #container:-webkit-full-screen #videoControls,
       :host #container:fullscreen #videoControls,
       :host #container:-moz-full-screen #videoControls,
       :host #container:-ms-fullscreen #videoControls,
-      
-      :host #container:-webkit-full-screen ::content .top-controls,
-      :host #container:fullscreen ::content .top-controls,
-      :host #container:-moz-full-screen ::content .top-controls,
-      :host #container:-ms-fullscreen ::content .top-controls {
+
+      :host #container:-webkit-full-screen ::slotted(#topControls),
+      :host #container:fullscreen ::slotted(#topControls),
+      :host #container:-moz-full-screen ::slotted(#topControls),
+      :host #container:-ms-fullscreen ::slotted(#topControls) {
         position: fixed;
       }
-      :host #videoControls,:host ::content .top-controls {
+      :host #videoControls,:host ::slotted(#topControls) {
         position: absolute;
         left: 0;
         right: 0;
@@ -78,11 +84,8 @@ Custom property | Description | Default
         align-items: center;
         padding: 15px;
       }
-      :host ::content .top-controls {
+      :host ::slotted(#topControls) {
         top: 0px;
-      }
-      :host ::content #container:not(:-webkit-full-screen) .fullscreen-controls {
-        display: none;
       }
       :host .container {
           position: relative;
@@ -97,23 +100,23 @@ Custom property | Description | Default
           max-width: 120px;
       }
       :host #container:-webkit-full-screen,
-      :host #container:-webkit-full-screen ::content video {
+      :host #container:-webkit-full-screen ::slotted(video) {
           width: 100vw;
           height: 100vh;
       }
-      :host ::content video {
+      :host ::slotted(video) {
         background-color: black;
         width: 100%;
       }
       :host.controls-hidden .container {
         cursor: none;
       }
-      
+
       :host(.controls-hidden:not([controls])) {
         cursor: default;
       }
-      
-      :host(.controls-hidden) #videoControls, :host(.controls-hidden) ::content .top-controls {
+
+      :host(.controls-hidden) #videoControls, :host(.controls-hidden) ::slotted(#topControls) {
         transition: 0.5s;
         opacity: 0;
         pointer-events: none;
@@ -131,22 +134,41 @@ Custom property | Description | Default
         --paper-slider-pin-color: var(--paper-video-controls-slider-color);
         --paper-slider-font-color: var(--paper-video-controls-pin-text-color);
       }
-      @media (max-width:640px)  { 
+      @media (max-width:640px)  {
           #volumeSlider, #toggleMute {
             display: none;
           }
       }
     </style>
+
     <div id="container" class="container">
-      <content id="videoContent" select="video"></content>
-      <content id="topControls" select=".top-controls"></content>
+      <slot id="videoContent" name="video"></slot>
+      <slot id="topControls" name="top-controls"></slot>
       <paper-material elevation="1" hidden$="{{!controls}}" id="videoControls">
-          <paper-icon-button id="playPauseIcon" on-tap="togglePlayPause" icon="av:play-arrow"></paper-icon-button>
-          <span class="video-time">{{_readableDuration(currentTime)}}/[[_readableDuration(duration)]]</span>
-          <paper-slider pin="[[timePin]]" id="durationSlider" max="[[duration]]" on-change="_changeCurrentTime" immediate-value="{{durationSliderValue}}" pin-label="[[_readableDuration(durationSliderValue)]]"></paper-slider>
-          <paper-icon-button id="toggleMute" icon="av:volume-up" on-tap="toggleMute"></paper-icon-button>
-          <paper-slider pin="[[volumePin]]" pin-label="[[_readableVolume(volumeSliderValue)]]" immediate-value="{{volumeSliderValue}}" id="volumeSlider" value="{{videoVolume}}" on-immediate-value-change="_changeVolume"></paper-slider>
-          <paper-icon-button id="fullScreen" icon="icons:fullscreen" on-tap="toggleFullScreen"></paper-icon-button>
+        <paper-icon-button id="playPauseIcon"
+            on-tap="togglePlayPause"
+            icon="pvc:play"></paper-icon-button>
+        <span class="video-time">
+          {{_readableDuration(currentTime)}}/[[_readableDuration(duration)]]
+        </span>
+        <paper-slider id="durationSlider"
+            max="[[duration]]"
+            on-change="_changeCurrentTime"
+            immediate-value="{{durationSliderValue}}"
+            pin="[[timePin]]"
+            pin-label="[[_readableDuration(durationSliderValue)]]"></paper-slider>
+        <paper-icon-button id="toggleMute"
+            icon="pvc:mute"
+            on-tap="toggleMute"></paper-icon-button>
+        <paper-slider id="volumeSlider"
+            pin="[[volumePin]]"
+            pin-label="[[_readableVolume(volumeSliderValue)]]"
+            immediate-value="{{volumeSliderValue}}"
+            value="{{videoVolume}}"
+            on-immediate-value-change="_changeVolume"></paper-slider>
+        <paper-icon-button id="fullScreen"
+            icon="pvc:fullscreen"
+            on-tap="toggleFullScreen"></paper-icon-button>
       </paper-material>
     </div>
   </template>
@@ -165,7 +187,7 @@ Custom property | Description | Default
           };
           video.onloadedmetadata = function() {
             that._durationChange();
-          }
+          };
           video.ontimeupdate = function() {
             that._currentTimeChange();
           };
@@ -175,23 +197,23 @@ Custom property | Description | Default
           };
           this._currentVolumeChange();
           video.onpause = function() {
-            that.$.playPauseIcon.icon = "av:play-arrow";
-          }
+            that.$.playPauseIcon.icon = "pvc:play";
+          };
           video.onplay = function() {
-            that.$.playPauseIcon.icon = "av:pause";
-          }
+            that.$.playPauseIcon.icon = "pvc:pause";
+          };
           if (this.requestFullScreen) {
             this.onfullscreenchange = function() {
               that._fullscreenChange(document.fullscreen);
-            }
+            };
           } else if (this.webkitRequestFullscreen) {
             this.onwebkitfullscreenchange = function() {
               that._fullScreenChange(document.webkitIsFullScreen);
-            }
+            };
           } else if (this.mozRequestFullScreen) {
             document.onmozfullscreenchange = function() {
               that._fullScreenChange(document.mozFullScreen);
-            }
+            };
           } else if (video.webkitEnterFullscreen) {
             video.addEventListener("webkitbeginfullscreen", function() {
               that._fullscreenChange(true);
@@ -211,7 +233,7 @@ Custom property | Description | Default
           value: true
         },
         /**
-         * If true, will show a small pin with percentage when dragging the volume slider. 
+         * If true, will show a small pin with percentage when dragging the volume slider.
          */
         volumePin: {
           type: Boolean,
@@ -252,7 +274,7 @@ Custom property | Description | Default
       },
       _currentTimeChange: function() {
         var duration = this.$.video.duration;
-        if (!isNaN(duration) && duration !== undefined && duration != null) {
+        if (!isNaN(duration) && duration !== undefined && duration !== null) {
           this._durationChange();
         }
         this.currentTime = this.$.video.currentTime;
@@ -265,14 +287,14 @@ Custom property | Description | Default
       },
       _currentVolumeChange: function() {
         this.videoVolume = this.$.video.volume * 100;
-        this.$.toggleMute.icon = this.$.video.muted ? "av:volume-off" : "av:volume-up"
+        this.$.toggleMute.icon = this.$.video.muted ? "pvc:mute" : "pvc:unmute";
       },
       _changeVolume: function() {
         this.$.video.volume = this.$.volumeSlider.immediateValue / 100;
       },
       _changeCurrentTime: function() {
         if (!this.$.durationSlider.dragging) {
-          this.$.video.currentTime = this.$.durationSlider.value
+          this.$.video.currentTime = this.$.durationSlider.value;
         }
       },
       _readableVolume: function(volume) {
@@ -280,7 +302,7 @@ Custom property | Description | Default
       },
       _fullScreenChange: function(fullScreen) {
         this._setFullScreen(fullScreen);
-        this.$.fullScreen.icon = fullScreen ? "icons:fullscreen-exit" : "icons:fullscreen"
+        this.$.fullScreen.icon = fullScreen ? "pvc:fullscreen-exit" : "pvc:fullscreen";
       },
       /**
       * Shows the controls
@@ -339,7 +361,7 @@ Custom property | Description | Default
       */
       togglePlayPause: function() {
         if (this.$.video.paused) {
-          this.$.video.play()
+          this.$.video.play();
         } else {
           this.$.video.pause();
         }
